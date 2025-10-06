@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - GREENHOODFORM</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { display: flex; min-height: 100vh; background: #f4f6f9; }
+
+    /* Sidebar */
+    .sidebar { width: 250px; background: #2e7d32; color: #fff; padding: 20px 0; flex-shrink: 0; transition: all 0.3s; }
+    .sidebar h2 { text-align: center; margin-bottom: 30px; font-size: 22px; color: #fff; }
+    .sidebar ul { list-style: none; }
+    .sidebar ul li { padding: 15px 20px; cursor: pointer; transition: background 0.3s; }
+    .sidebar ul li:hover, .sidebar ul li.active { background: #1b5e20; }
+
+    /* Main */
+    .main { flex: 1; display: flex; flex-direction: column; }
+
+    /* Topbar */
+    .topbar { background: #fff; padding: 15px 20px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+    .topbar h1 { font-size: 20px; color: #333; }
+    .profile { display: flex; align-items: center; gap: 10px; }
+
+    /* Logout button */
+    .logout-btn {
+      background: #e53935;
+      color: #fff;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+    .logout-btn:hover { background: #c62828; }
+
+    /* Cards */
+    .content { padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    .card { padding: 20px; border-radius: 10px; color: #fff; text-align: center; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-5px); }
+    .card h2 { font-size: 18px; margin-bottom: 10px; }
+    .card p { font-size: 14px; }
+
+    /* Different card colors */
+    .loan { background: #4caf50; }
+    .property { background: #2196f3; }
+    .mortgage { background: #9c27b0; }
+    .pos { background: #ff9800; }
+    .job { background: #e91e63; }
+    .stability { background: #3f51b5; }
+
+    /* Recent Submissions */
+    .recent { background: #fff; margin: 20px; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow-x: auto; }
+    .recent h3 { margin-bottom: 15px; color: #333; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; font-size: 14px; }
+    th { background: #2e7d32; color: #fff; }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4caf50;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 5px;
+      display: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      animation: fadeInOut 4s forwards;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+
+    /* Mobile */
+    @media(max-width: 768px) {
+      body { flex-direction: column; }
+      .sidebar { width: 100%; }
+      .content { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>GREENHOOD</h2>
+    <ul>
+      <li class="active">Loan</li>
+      <li>Property</li>
+      <li>Mortgage</li>
+      <li>POS</li>
+      <li>Job</li>
+      <li>International Stability</li>
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <h1>Dashboard</h1>
+      <div class="profile">
+        <span>Admin</span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="content">
+      <div class="card loan">
+        <h2>Loan</h2>
+        <p id="loanCount">0 Applications</p>
+      </div>
+      <div class="card property">
+        <h2>Property</h2>
+        <p id="propertyCount">0 Listings</p>
+      </div>
+      <div class="card mortgage">
+        <h2>Mortgage</h2>
+        <p id="mortgageCount">0 Requests</p>
+      </div>
+      <div class="card pos">
+        <h2>POS</h2>
+        <p id="posCount">0 Transactions</p>
+      </div>
+      <div class="card job">
+        <h2>Job</h2>
+        <p id="jobCount">0 Applications</p>
+      </div>
+      <div class="card stability">
+        <h2>International Stability</h2>
+        <p id="stabilityCount">0 Projects</p>
+      </div>
+    </div>
+
+    <!-- Recent Submissions -->
+    <div class="recent">
+      <h3>📋 Recent Submissions</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>State</th>
+            <th>Phone</th>
+            <th>Product</th>
+            <th>agentcode</th>
+          </tr>
+        </thead>
+        <tbody id="submissionsTable">
+          <tr><td colspan="6">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">New submission received!</div>
+
+  <script>
+    let lastCount = 0;
+
+    async function loadDashboard(showToast = false) {
+      try {
+        const res = await fetch("/submissions");
+        const data = await res.json();
+
+        if (showToast && data.length > lastCount) {
+          showNotification("New submission received!");
+        }
+        lastCount = data.length;
+
+        // 🟢 Update table
+        const table = document.getElementById("submissionsTable");
+        table.innerHTML = "";
+        if (data.length === 0) {
+          table.innerHTML = "<tr><td colspan='6'>No submissions yet.</td></tr>";
+        } else {
+          data.forEach((item, index) => {
+            table.innerHTML += `
+              <tr>
+                <td>${index + 1}</td>
+                <td>${item.first_name} ${item.last_name}</td>
+                <td>${item.your_email}</td>
+                <td>${item.state}</td>
+                <td>${item.phone}</td>
+                <td>${item.product}</td>
+                 <td>${item.agentcode}</td>
+              </tr>
+            `;
+          });
+        }
+
+        // 🟢 Update card counts based on product
+        const counts = { loan: 0, property: 0, mortgage: 0, pos: 0, job: 0, stability: 0 };
+        data.forEach(item => {
+          const prod = (item.product || "").toLowerCase();
+          if (prod.includes("loan")) counts.loan++;
+          else if (prod.includes("property")) counts.property++;
+          else if (prod.includes("mortgage")) counts.mortgage++;
+          else if (prod.includes("pos")) counts.pos++;
+          else if (prod.includes("job")) counts.job++;
+          else if (prod.includes("stability")) counts.stability++;
+        });
+
+        document.getElementById("loanCount").innerText = `${counts.loan} Applications`;
+        document.getElementById("propertyCount").innerText = `${counts.property} Listings`;
+        document.getElementById("mortgageCount").innerText = `${counts.mortgage} Requests`;
+        document.getElementById("posCount").innerText = `${counts.pos} Transactions`;
+        document.getElementById("jobCount").innerText = `${counts.job} Applications`;
+        document.getElementById("stabilityCount").innerText = `${counts.stability} Projects`;
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    function showNotification(message) {
+      const toast = document.getElementById("toast");
+      toast.innerText = message;
+      toast.style.display = "block";
+      setTimeout(() => { toast.style.display = "none"; }, 4000);
+    }
+
+    function logout() {
+      fetch("/logout")
+        .then(() => window.location.href = "/login.html")
+        .catch(err => console.error("Logout error:", err));
+    }
+
+    loadDashboard();
+    setInterval(() => loadDashboard(true), 10000); // refresh every 10s
+  </script>
+</body>
+</html>
