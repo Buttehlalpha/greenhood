@@ -6,13 +6,12 @@ const session = require("express-session");
 
 const app = express();
 
-// ✅ MongoDB Connection
+//  MongoDB Connection
 mongoose.connect(
   "mongodb+srv://alphaDB:alpha%402019@cluster0.akwwbwn.mongodb.net/greenhood?retryWrites=true&w=majority&appName=Cluster0"
 )
-.then(() => console.log("✅ MongoDB connected"))
-.catch(err => console.log("❌ MongoDB error:", err));
-
+.then(() => console.log(" MongoDB connected"))
+.catch(err => console.log(" MongoDB error:", err));
 
 const FormSchema = new mongoose.Schema({
   title: String,
@@ -28,13 +27,13 @@ const FormSchema = new mongoose.Schema({
   code: String,
   phone: String,
   your_email: String,
-  checkbox: String, // "on" or ""
+  checkbox: String,
   register: String,
 }, { timestamps: true });
 
 const Form = mongoose.model("Form", FormSchema);
 
-// ✅ Middlewares
+//  Middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
@@ -44,81 +43,70 @@ app.use(session({
   saveUninitialized: true
 }));
 
-// ✅ Dummy admin credentials
 const ADMIN = { email: "admin@greenhood.com", password: "alpha@2019" };
 
-// ✅ Middleware to protect dashboard
-function isAuthenticated(req, res, next) {
-  if (req.session.user) return next();
+//  Middleware to protect dashboard
+function isAuthenticated(req, res, next){
+  if(req.session.user) return next();
   res.redirect("/login");
 }
 
 // --- Routes ---
-
-// Serve index
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+app.get("/", (req,res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
 
-// Login page
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
+app.get("/login", (req,res) => {
+  res.sendFile(path.join(__dirname, "public/login.html"));
 });
 
-//// ✅ Login action
-app.post("/login", (req, res) => {
-  const { email, password } = req.body; 
-
-  if (email === "admin@greenhood.com" && password === "alpha@2019") {
+app.post("/login", (req,res) => {
+  const { email, password } = req.body;
+  if(email === ADMIN.email && password === ADMIN.password){
     req.session.user = { email };
     return res.redirect("/dashboard");
   }
   res.status(401).send("Invalid credentials");
 });
 
-// Dashboard (protected)
-app.get("/dashboard", isAuthenticated, (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "dashboard.html"));
+app.get("/dashboard", isAuthenticated, (req,res) => {
+  res.sendFile(path.join(__dirname, "public/dashboard.html"));
 });
 
-// Logout
-app.get("/logout", (req, res) => {
+app.get("/logout", (req,res) => {
   req.session.destroy(() => {
     res.redirect("/login");
   });
 });
 
-// Handle form submissions
-app.post("/submit-form", async (req, res) => {
+// Handle form submission (JSON response for SweetAlert)
+app.post("/submit-form", async (req,res) => {
   try {
     req.body.checkbox = req.body.checkbox === "on" ? "on" : "";
     const newForm = new Form(req.body);
     await newForm.save();
-    console.log("✅ Form saved:", newForm);
-    res.json({ success: true, message: "Form submitted successfully!", data: req.body });
-  } catch (err) {
-    console.error("❌ Error saving form:", err, err.stack);
-    res.status(500).json({ success: false, message: "Error saving form", error: String(err) });
+    console.log(" Form saved:", newForm);
+    res.json({ success: true, message: "Form submitted successfully!" });
+  } catch(err){
+    console.error("❌ Error saving form:", err);
+    res.status(500).json({ success: false, message: "Error submitting form. Try again." });
   }
 });
 
-// Fetch all submissions (for dashboard)
-app.get("/submissions", isAuthenticated, async (req, res) => {
+app.get("/submissions", isAuthenticated, async (req,res) => {
   try {
     const submissions = await Form.find().sort({ createdAt: -1 });
     res.json(submissions);
-  } catch (err) {
-    console.error("❌ Error fetching submissions:", err);
-    res.status(500).json({ success: false, message: "Error fetching submissions", error: String(err) });
+  } catch(err){
+    console.error(err);
+    res.status(500).json({ success: false });
   }
 });
 
-// Catch-all for other HTML pages
-app.get("/:page", (req, res) => {
+app.get("/:page", (req,res) => {
   const page = req.params.page + ".html";
   res.sendFile(path.join(__dirname, "public", page));
 });
 
-// ✅ Start server
 const PORT = 3000;
 app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));

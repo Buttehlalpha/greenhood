@@ -151,11 +151,11 @@
             <th>State</th>
             <th>Phone</th>
             <th>Product</th>
-            <th>agentcode</th>
+            <th>Agent Code</th>
           </tr>
         </thead>
         <tbody id="submissionsTable">
-          <tr><td colspan="6">Loading...</td></tr>
+          <tr><td colspan="7">Loading...</td></tr>
         </tbody>
       </table>
     </div>
@@ -181,33 +181,36 @@
         const table = document.getElementById("submissionsTable");
         table.innerHTML = "";
         if (data.length === 0) {
-          table.innerHTML = "<tr><td colspan='6'>No submissions yet.</td></tr>";
+          table.innerHTML = "<tr><td colspan='7'>No submissions yet.</td></tr>";
         } else {
           data.forEach((item, index) => {
             table.innerHTML += `
               <tr>
                 <td>${index + 1}</td>
-                <td>${item.first_name} ${item.last_name}</td>
-                <td>${item.your_email}</td>
-                <td>${item.state}</td>
-                <td>${item.phone}</td>
-                <td>${item.product}</td>
-                 <td>${item.agentcode}</td>
+                <td>${item.first_name || ''} ${item.last_name || ''}</td>
+                <td>${item.your_email || ''}</td>
+                <td>${item.state || ''}</td>
+                <td>${item.phone || ''}</td>
+                <td>${item.product || item.position || ''}</td>
+                <td>${item.agentcode || ''}</td>
               </tr>
             `;
           });
         }
 
-        // 🟢 Update card counts based on product
+        // 🟢 Update card counts based on product or position
         const counts = { loan: 0, property: 0, mortgage: 0, pos: 0, job: 0, stability: 0 };
+
         data.forEach(item => {
-          const prod = (item.product || "").toLowerCase();
-          if (prod.includes("loan")) counts.loan++;
-          else if (prod.includes("property")) counts.property++;
-          else if (prod.includes("mortgage")) counts.mortgage++;
-          else if (prod.includes("pos")) counts.pos++;
-          else if (prod.includes("job")) counts.job++;
-          else if (prod.includes("stability")) counts.stability++;
+          // check both product and position
+          const value = (item.product || item.position || "").toLowerCase();
+
+          if (value.includes("loan")) counts.loan++;
+          else if (value.includes("property")) counts.property++;
+          else if (value.includes("mortgage")) counts.mortgage++;
+          else if (value.includes("pos")) counts.pos++;
+          else if (value.includes("job")) counts.job++;
+          else if (value.includes("stability")) counts.stability++;
         });
 
         document.getElementById("loanCount").innerText = `${counts.loan} Applications`;

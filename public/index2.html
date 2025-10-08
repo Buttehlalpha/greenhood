@@ -1,170 +1,223 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<title>greenhood form</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="stylesheet" type="text/css" href="css/montserrat-font.css">
-	<link rel="stylesheet" type="text/css" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
-	<link rel="stylesheet" href="css/style.css"/>
+  <meta charset="utf-8">
+  <title>greenhood form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" type="text/css" href="css/montserrat-font.css">
+  <link rel="stylesheet" type="text/css" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="css/style.css"/>
+  <!-- ✅ SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 <body class="form-v10">
-	<div class="page-content">
-		<div class="form-v10-content">
-			<form class="form-detail" action="/submit-form" method="post" id="myform">
+  <div class="page-content">
+    <div class="form-v10-content">
+      <form class="form-detail" action="/submit-form" method="post" id="myform">
 
-				<div class="form-left">
-					<h2>General Infomation</h2>
+        <div class="form-left">
+          <h2>General Infomation</h2>
 
-					<div class="form-row">
-						<select name="title">
-						    <option class="option" value="">Title</option>
-						    <option class="option" value="businessman">Businessman</option>
-						    <option class="option" value="Mr">Mr</option>
-						    <option class="option" value="Mrs">Mrs</option>
-						    <option class="option" value="Miss">Miss</option>
-						</select>
-						<span class="select-btn">
-						  	<i class="zmdi zmdi-chevron-down"></i>
-						</span>
-					</div>
+          <div class="form-row">
+            <select name="title">
+              <option class="option" value="">Title</option>
+              <option class="option" value="businessman">Businessman</option>
+              <option class="option" value="Mr">Mr</option>
+              <option class="option" value="Mrs">Mrs</option>
+              <option class="option" value="Miss">Miss</option>
+            </select>
+            <span class="select-btn">
+              <i class="zmdi zmdi-chevron-down"></i>
+            </span>
+          </div>
 
-					<div class="form-group">
-						<div class="form-row form-row-1">
-							<input type="text" name="first_name" id="first_name" class="input-text" placeholder="First Name" required>
-						</div>
-						<div class="form-row form-row-2">
-							<input type="text" name="last_name" id="last_name" class="input-text" placeholder="Last Name" required>
-						</div>
-					</div>
+          <div class="form-group">
+            <div class="form-row form-row-1">
+              <input type="text" name="first_name" id="first_name" class="input-text" placeholder="First Name" required>
+            </div>
+            <div class="form-row form-row-2">
+              <input type="text" name="last_name" id="last_name" class="input-text" placeholder="Last Name" required>
+            </div>
+          </div>
 
-					<div class="form-row">
-						<select name="position">
-						    <option value="">Select Position</option>
-						    <option value="Employed">Employed</option>
-						    <option value="Unemployed">Unemployed</option>
-						    <option value="Business Owner">Business Owner</option>
-						</select>
-						<span class="select-btn">
-						  	<i class="zmdi zmdi-chevron-down"></i>
-						</span>
-					</div>
+          <div class="form-row">
+            <select name="position">
+              <option value="">Select Position</option>
+              <option value="Employed">Employed</option>
+              <option value="Unemployed">Unemployed</option>
+              <option value="Business Owner">Business Owner</option>
+            </select>
+            <span class="select-btn">
+              <i class="zmdi zmdi-chevron-down"></i>
+            </span>
+          </div>
 
-					<div class="form-group">
-						<div class="form-row form-row-3">
-							<select name="agentcode">
-							    <option value="">Select Agent Code</option>
-<option value="ACG/010210/2025/DSA">ACG/010210/2025/DSA</option>
-<option value="ACG/010209/2025/DSA">ACG/010209/2025/DSA</option>
-<option value="ACG/010208/2025/DSA">ACG/010208/2025/DSA</option>
-<!-- ... keep all other codes ... -->
-<option value="ACG/010175/2025/DSA">ACG/010175/2025/DSA</option>
-							</select>
-						</div>
+          <div class="form-group">
+            <div class="form-row form-row-3">
+              <select name="agentcode">
+                <option value="">Select Agent Code</option>
+                <option value="ACG/010210/2025/DSA">ACG/010210/2025/DSA</option>
+                <option value="ACG/010209/2025/DSA">ACG/010209/2025/DSA</option>
+                <option value="ACG/010208/2025/DSA">ACG/010208/2025/DSA</option>
+                <!-- ... keep all other codes ... -->
+                <option value="ACG/010175/2025/DSA">ACG/010175/2025/DSA</option>
+              </select>
+            </div>
 
-						<div class="form-row form-row-4">
-							<select name="product">
-							    <option value="">Select Product</option>
-							    <option value="employees">Bussiness loan</option>
-							    <option value="trainee">POS</option>
-							    <option value="colleague">International Job</option>
-							    <option value="associate">Education Scholarship</option>
-							    <option value="mortgage">Morgage Loan</option>
-							</select>
-							<span class="select-btn">
-							  	<i class="zmdi zmdi-chevron-down"></i>
-							</span>
-						</div>
-					</div>
-				</div>
+            <div class="form-row form-row-4">
+              <select name="product">
+                <option value="">Select Product</option>
+                <option value="loan">Business Loan</option>
+                <option value="pos">POS</option>
+                <option value="job">International Job</option>
+                <option value="property">Education Scholarship</option>
+                <option value="mortgage">Mortgage Loan</option>
+                <option value="stability">Stability Program</option>
+              </select>
+              <span class="select-btn">
+                <i class="zmdi zmdi-chevron-down"></i>
+              </span>
+            </div>
+          </div>
+        </div>
 
-				<div class="form-right">
-					<h2>Contact Details</h2>
-					<div class="form-row">
-						<input type="text" name="street" class="street" id="street" placeholder="Street + Nr" required>
-					</div>
-					<div class="form-row">
-						<input type="text" name="additional" class="additional" id="additional" placeholder="Additional Information" required>
-					</div>
+        <div class="form-right">
+          <h2>Contact Details</h2>
+          <div class="form-row">
+            <input type="text" name="street" class="street" id="street" placeholder="Street + Nr" required>
+          </div>
+          <div class="form-row">
+            <input type="text" name="additional" class="additional" id="additional" placeholder="Additional Information" required>
+          </div>
 
-					<div class="form-row">
-						<select name="state">
-						    <option value="">Select State</option>
-<option value="Abia">Abia</option>
-<option value="Adamawa">Adamawa</option>
-<option value="Akwa Ibom">Akwa Ibom</option>
-<option value="Anambra">Anambra</option>
-<option value="Bauchi">Bauchi</option>
-<option value="Bayelsa">Bayelsa</option>
-<option value="Benue">Benue</option>
-<option value="Borno">Borno</option>
-<option value="Cross River">Cross River</option>
-<option value="Delta">Delta</option>
-<option value="Ebonyi">Ebonyi</option>
-<option value="Edo">Edo</option>
-<option value="Ekiti">Ekiti</option>
-<option value="Enugu">Enugu</option>
-<option value="Gombe">Gombe</option>
-<option value="Imo">Imo</option>
-<option value="Jigawa">Jigawa</option>
-<option value="Kaduna">Kaduna</option>
-<option value="Kano">Kano</option>
-<option value="Katsina">Katsina</option>
-<option value="Kebbi">Kebbi</option>
-<option value="Kogi">Kogi</option>
-<option value="Kwara">Kwara</option>
-<option value="Lagos">Lagos</option>
-<option value="Nasarawa">Nasarawa</option>
-<option value="Niger">Niger</option>
-<option value="Ogun">Ogun</option>
-<option value="Ondo">Ondo</option>
-<option value="Osun">Osun</option>
-<option value="Oyo">Oyo</option>
-<option value="Plateau">Plateau</option>
-<option value="Rivers">Rivers</option>
-<option value="Sokoto">Sokoto</option>
-<option value="Taraba">Taraba</option>
-<option value="Yobe">Yobe</option>
-<option value="Zamfara">Zamfara</option>
-<option value="FCT">Federal Capital Territory (Abuja)</option>
-						</select>
-						<span class="select-btn">
-						  	<i class="zmdi zmdi-chevron-down"></i>
-						</span>
-					</div>
+          <div class="form-row">
+            <select name="state">
+              <option value="">Select State</option>
+              <option value="Abia">Abia</option>
+              <option value="Adamawa">Adamawa</option>
+              <option value="Akwa Ibom">Akwa Ibom</option>
+              <option value="Anambra">Anambra</option>
+              <option value="Bauchi">Bauchi</option>
+              <option value="Bayelsa">Bayelsa</option>
+              <option value="Benue">Benue</option>
+              <option value="Borno">Borno</option>
+              <option value="Cross River">Cross River</option>
+              <option value="Delta">Delta</option>
+              <option value="Ebonyi">Ebonyi</option>
+              <option value="Edo">Edo</option>
+              <option value="Ekiti">Ekiti</option>
+              <option value="Enugu">Enugu</option>
+              <option value="Gombe">Gombe</option>
+              <option value="Imo">Imo</option>
+              <option value="Jigawa">Jigawa</option>
+              <option value="Kaduna">Kaduna</option>
+              <option value="Kano">Kano</option>
+              <option value="Katsina">Katsina</option>
+              <option value="Kebbi">Kebbi</option>
+              <option value="Kogi">Kogi</option>
+              <option value="Kwara">Kwara</option>
+              <option value="Lagos">Lagos</option>
+              <option value="Nasarawa">Nasarawa</option>
+              <option value="Niger">Niger</option>
+              <option value="Ogun">Ogun</option>
+              <option value="Ondo">Ondo</option>
+              <option value="Osun">Osun</option>
+              <option value="Oyo">Oyo</option>
+              <option value="Plateau">Plateau</option>
+              <option value="Rivers">Rivers</option>
+              <option value="Sokoto">Sokoto</option>
+              <option value="Taraba">Taraba</option>
+              <option value="Yobe">Yobe</option>
+              <option value="Zamfara">Zamfara</option>
+              <option value="FCT">Federal Capital Territory (Abuja)</option>
+            </select>
+            <span class="select-btn">
+              <i class="zmdi zmdi-chevron-down"></i>
+            </span>
+          </div>
 
-					<div class="form-row">
-						<input type="text" name="lga" id="lga" class="input-text" placeholder="Your LGA">
-					</div>
+          <div class="form-row">
+            <input type="text" name="lga" id="lga" class="input-text" placeholder="Your LGA">
+          </div>
 
-					<div class="form-group">
-						<div class="form-row form-row-1">
-							<input type="text" name="code" class="code" id="code" placeholder="Code +" required>
-						</div>
-						<div class="form-row form-row-2">
-							<input type="text" name="phone" class="phone" id="phone" placeholder="Phone Number" required>
-						</div>
-					</div>
+          <div class="form-group">
+            <div class="form-row form-row-1">
+              <input type="text" name="code" class="code" id="code" placeholder="Code +" required>
+            </div>
+            <div class="form-row form-row-2">
+              <input type="text" name="phone" class="phone" id="phone" placeholder="Phone Number" required>
+            </div>
+          </div>
 
-					<div class="form-row">
-						<input type="text" name="your_email" id="your_email" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" placeholder="Your Email">
-					</div>
+          <div class="form-row">
+            <input type="text" name="your_email" id="your_email" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}" placeholder="Your Email">
+          </div>
 
-					<div class="form-checkbox">
-						<label class="container">
-							<p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
-						  	<input type="checkbox" name="checkbox">
-						  	<span class="checkmark"></span>
-						</label>
-					</div>
+          <div class="form-checkbox">
+            <label class="container">
+              <p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
+              <input type="checkbox" name="checkbox">
+              <span class="checkmark"></span>
+            </label>
+          </div>
 
-					<div class="form-row-last">
-						<input type="submit" name="register" class="register" value="SUBMIT">
-					</div>
-				</div>
+          <div class="form-row-last">
+            <input type="submit" name="register" class="register" value="SUBMIT">
+          </div>
+        </div>
 
-			</form>
-		</div>
-	</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ SweetAlert2 & AJAX -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    document.getElementById("myform").addEventListener("submit", async function(e){
+      e.preventDefault();
+      const form = e.target;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const res = await fetch("/submit-form", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(data)
+        });
+
+        if(res.ok){
+          Swal.fire({
+            icon: 'success',
+            title: 'Form Submitted!',
+            text: 'Your application has been successfully sent.',
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false
+          });
+          form.reset();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Submission Failed',
+            text: 'Something went wrong. Please try again!',
+            timer: 3000,
+            timerProgressBar: true,
+            showConfirmButton: false
+          });
+        }
+      } catch(err){
+        console.error(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Submission Failed',
+          text: 'Something went wrong. Please try again!',
+          timer: 3000,
+          timerProgressBar: true,
+          showConfirmButton: false
+        });
+      }
+    });
+  </script>
 </body>
 </html>
